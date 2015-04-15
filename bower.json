@@ -1,0 +1,6 @@
+{
+  "name": "domotica_ui",
+  "dependencies": {
+    "polymer": "Polymer/polymer#0.5"
+  }
+}
