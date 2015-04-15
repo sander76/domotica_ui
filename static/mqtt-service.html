@@ -63,6 +63,9 @@ this.client = new Paho.MQTT.Client(this.host, parseInt(this.port), this.clientid
 
             publish: function (payload) {
                 console.log("topic fired: "+payload.detail);
+                message = new Paho.MQTT.Message(payload.detail.payload);
+                message.destinationName="lights/1";
+                this.client.send(message);
             //todo:finish the publish method.
             },
 
@@ -79,20 +82,13 @@ this.client = new Paho.MQTT.Client(this.host, parseInt(this.port), this.clientid
             onMessageArrived: function (response) {
                 var ret_topic = response.destinationName;
                 var ret_payload = response.payloadString;
-                //var ret_payload = response.payloadBytes;
+                
 
                 this.fire('receive-message', {
                     topic: ret_topic,
                     payload: ret_payload
                 });
 
-                //                for (var i = 0; i < this.topics.length; i++) {
-                //                    if (this.topics[i].topic === ret_topic) {
-                //                        this.fire(this.topics[i].topic,this.topics[i].value);
-                //
-                //                        this.topics[i].value = ret_payload;
-                //                    }
-                //                }
                 if (this.debug) {
                     console.log("glass-timer: Message Arrived, topic:" + ret_topic + " payload:" + ret_payload);
                 }
