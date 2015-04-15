@@ -1,0 +1,46 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+
+<link rel="import" href="subscriber.html">
+
+<polymer-element name="mqtt-subscriber-toggle" attributes="topic" extends="mqtt-subscriber">
+    <template>
+        <div layout horizontal center>
+            <div>
+                <shadow></shadow>
+            </div>
+            <paper-toggle-button on-change="{{toggleChanged}}" checked="{{checked}}"></paper-toggle-button>
+        </div>
+    </template>
+    <script>
+        Polymer("mqtt-subscriber-toggle", {
+
+            ready: function () {
+                this.checked = false;
+            },
+            interpret: function (message) {
+                if (message.detail.topic === this.topic) {
+                    if (message.detail.payload === '1') {
+                        this.checked = true;
+                    } else if (message.detail.payload === '0') {
+                        this.checked = false;
+                    }
+                }
+            },
+            toggleChanged: function () {
+                var payload;
+                if (this.checked) {
+                    payload = '1'
+                } else {
+                    payload = '0'
+                };
+                this.fire('publish-message', {
+                        topic: this.topic,
+                        payload: payload
+                    }
+
+                );
+            }
+        });
+    </script>
+</polymer-element>

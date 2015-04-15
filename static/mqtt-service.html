@@ -1,0 +1,103 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<!--<script src="../components/mqttws31.js"></script>-->
+<script src="../bower_components/paho-mqtt-js/mqttws31.js"></script>
+<polymer-element name="mqtt-service" attributes="host port debug client subscribe topics">
+    <template>
+    </template>
+    <script>
+        Polymer('mqtt-service', {
+            host: '',
+            port: '',
+            client: null,
+            debug: true,
+
+            created: function () {
+                this.clientid = this.clientid = "glasstimer_" + parseInt(Math.random() * 1000, 10);
+
+
+            },
+            ready: function () {
+                this.topics = [];
+//                this.client = new Messaging.Client(this.host, parseInt(this.port), this.clientid);
+this.client = new Paho.MQTT.Client(this.host, parseInt(this.port), this.clientid);
+                
+                this.client.onConnectionLost = this.onConnectionLost.bind(this);
+                this.client.onMessageArrived = this.onMessageArrived.bind(this);
+
+                var parent = document.querySelector('mqtt-parent');
+                parent.addEventListener('publish-message', this.publish.bind(this));
+
+                //
+                // For the sake of this example, we'll just define this here.
+                // Ideally, this would be passed in as an attribute
+                //
+                this.options = {
+                    timeout: 3,
+                    useSSL: false,
+                    cleanSession: true,
+                    onSuccess: this.onConnect.bind(this),
+                    onFailure: this.onFailure.bind(this)
+                };
+                this.connect();
+            },
+            connect: function () {
+                this.client.connect(this.options);
+            },
+            onConnect: function () {
+                if (this.debug) {
+                    console.log("connection established");
+                }
+                //todo: add a watcher to subscribe after connection is made.
+                this.subscribe();
+            },
+
+            subscribe: function () {
+                for (var i = 0; i < this.topics.length; i++) {
+                    this.client.subscribe(this.topics[i], {
+                        qos: 0
+                    });
+                }
+            },
+
+
+
+            publish: function (payload) {
+                console.log("topic fired: "+payload.detail);
+            //todo:finish the publish method.
+            },
+
+            onFailure: function (response) {
+                if (this.debug) {
+                    console.log("connection failed");
+                }
+            },
+            onConnectionLost: function (response) {
+                if (this.debug) {
+                    console.log("connection lost");
+                }
+            },
+            onMessageArrived: function (response) {
+                var ret_topic = response.destinationName;
+                var ret_payload = response.payloadString;
+                //var ret_payload = response.payloadBytes;
+
+                this.fire('receive-message', {
+                    topic: ret_topic,
+                    payload: ret_payload
+                });
+
+                //                for (var i = 0; i < this.topics.length; i++) {
+                //                    if (this.topics[i].topic === ret_topic) {
+                //                        this.fire(this.topics[i].topic,this.topics[i].value);
+                //
+                //                        this.topics[i].value = ret_payload;
+                //                    }
+                //                }
+                if (this.debug) {
+                    console.log("glass-timer: Message Arrived, topic:" + ret_topic + " payload:" + ret_payload);
+                }
+            }
+
+        });
+    </script>
+</polymer-element>

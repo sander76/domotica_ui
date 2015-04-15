@@ -1,0 +1,22 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel=import href="mqtt-service.html">
+<!--<link rel=import href="subscriber.html">-->
+<link rel=import href="subscriber-toggle.html">
+
+<polymer-element name="mqtt-parent">
+    <template>
+<!--        <mqtt-service host="192.168.2.14" topics='{{topics}}' client="test.mosquitto.org" port="9001" debug="true"></mqtt-service>-->
+        <mqtt-service host="test.mosquitto.org" topics='{{topics}}' client="test.mosquitto.org" port="8080" debug="true"></mqtt-service>
+        <mqtt-subscriber-toggle topic="{{light1}}"></mqtt-subscriber-toggle>
+        <mqtt-subscriber-toggle topic="{{light1}}"></mqtt-subscriber-toggle>
+    </template>
+    <script>
+        Polymer("mqtt-parent",{
+            ready: function () {
+                this.light1 = "lights/1"
+                this.light2 = "lights/2"
+                this.topics = [this.light1, this.light2];
+            },
+        });
+    </script>
+</polymer-element>
