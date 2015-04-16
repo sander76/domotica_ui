@@ -1,0 +1,14 @@
+{
+  "name": "Duomo",
+  "short_name": "Duomo",
+  "start_url": "/static/",
+  "display": "standalone",
+  "icons": [
+    {
+     "src": "\/static\/favicon-192x192.png",
+     "sizes": "192x192",
+     "type": "image\/png",
+     "density": "4.0"
+    }
+  ]
+}

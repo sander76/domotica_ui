@@ -13,7 +13,7 @@
             created: function () {
                 //this.checked = false;
                 var parent = document.querySelector('mqtt-parent');
-                parent.addEventListener('receive-message', this.interpret.bind(this));
+                parent.addEventListener('from-broker', this.interpret.bind(this));
             },
             interpret: function (message) {
                 console.log(message.detail);

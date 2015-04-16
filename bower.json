@@ -2,6 +2,7 @@
   "name": "domotica_ui",
   "dependencies": {
     "polymer": "Polymer/polymer#0.5",
-    "paho-mqtt-js": "~1.0.1"
+    "paho-mqtt-js": "~1.0.1",
+    "font-awesome-polymer-icons": "~4.2.0-b2"
   }
 }

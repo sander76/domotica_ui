@@ -1,15 +1,37 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
-
+<link rel="import" href="../bower_components/font-awesome-polymer-icons/fa-icons.html">
 <link rel="import" href="subscriber.html">
 
-<polymer-element name="mqtt-subscriber-toggle" attributes="topic" extends="mqtt-subscriber">
+<polymer-element name="mqtt-subscriber-toggle" attributes="topic control_name" extends="mqtt-subscriber">
     <template>
-        <div layout horizontal center>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                background-color: white;
+                padding: 20px;
+                width: 100%;
+                font-size: 1.2rem;
+                font-weight: 300;
+            }
+            
+            core-icon {
+                color: #656565;
+            }
+        </style>
+        <div layout horizontal>
             <div>
-                <shadow></shadow>
+                <core-icon icon="fa:lightbulb-o"></core-icon>
             </div>
-            <paper-toggle-button on-change="{{toggleChanged}}" checked="{{checked}}"></paper-toggle-button>
+            <div flex>{{control_name}}</div>
+            <div>
+                <paper-toggle-button on-change="{{toggleChanged}}" checked="{{checked}}"></paper-toggle-button>
+            </div>
+            <!--                <shadow></shadow>-->
+
+
+
         </div>
     </template>
     <script>
@@ -17,6 +39,7 @@
 
             ready: function () {
                 this.checked = false;
+                this.control_name = this.control_name || 'no title defined';
             },
             interpret: function (message) {
                 if (message.detail.topic === this.topic) {
@@ -34,7 +57,7 @@
                 } else {
                     payload = '0'
                 };
-                this.fire('publish-message', {
+                this.fire('to-broker', {
                         topic: this.topic,
                         payload: payload
                     }

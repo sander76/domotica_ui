@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<!--<script src="../components/mqttws31.js"></script>-->
 <script src="../bower_components/paho-mqtt-js/mqttws31.js"></script>
-<polymer-element name="mqtt-service" attributes="host port debug client subscribe topics">
+<polymer-element name="mqtt-service" attributes="host port debug client subscribe topics connection_state">
     <template>
     </template>
     <script>
@@ -18,36 +17,50 @@
             },
             ready: function () {
                 this.topics = [];
-//                this.client = new Messaging.Client(this.host, parseInt(this.port), this.clientid);
-this.client = new Paho.MQTT.Client(this.host, parseInt(this.port), this.clientid);
-                
+                this.client = new Paho.MQTT.Client(this.host, parseInt(this.port), this.clientid);
+
                 this.client.onConnectionLost = this.onConnectionLost.bind(this);
                 this.client.onMessageArrived = this.onMessageArrived.bind(this);
 
                 var parent = document.querySelector('mqtt-parent');
-                parent.addEventListener('publish-message', this.publish.bind(this));
+                parent.addEventListener('to-broker', this.publish.bind(this));
 
                 //
                 // For the sake of this example, we'll just define this here.
                 // Ideally, this would be passed in as an attribute
                 //
-                this.options = {
+//                this.options = {
+//                    timeout: 3,
+//                    useSSL: false,
+//                    cleanSession: true,
+//                    onSuccess: this.onConnect.bind(this),
+//                    onFailure: this.onFailure.bind(this)
+//                };
+                this.connect();
+            },
+            getOptions: function () {
+                return {
                     timeout: 3,
                     useSSL: false,
                     cleanSession: true,
                     onSuccess: this.onConnect.bind(this),
                     onFailure: this.onFailure.bind(this)
                 };
-                this.connect();
+            },
+
+            disconnect: function () {
+                this.client.disconnect();
             },
             connect: function () {
-                this.client.connect(this.options);
+                this.connection_state = 'connecting';
+                this.client.connect(this.getOptions());
             },
+
             onConnect: function () {
+                this.connection_state = 'connected';
                 if (this.debug) {
                     console.log("connection established");
                 }
-                //todo: add a watcher to subscribe after connection is made.
                 this.subscribe();
             },
 
@@ -62,35 +75,39 @@ this.client = new Paho.MQTT.Client(this.host, parseInt(this.port), this.clientid
 
 
             publish: function (payload) {
-                console.log("topic fired: "+payload.detail);
+                console.log("topic fired: " + payload.detail);
                 message = new Paho.MQTT.Message(payload.detail.payload);
-                message.destinationName="lights/1";
+                message.destinationName = "lights/1";
+                message.retained = true;
                 this.client.send(message);
-            //todo:finish the publish method.
+
             },
 
             onFailure: function (response) {
+                this.connection_state = 'no connection';
                 if (this.debug) {
                     console.log("connection failed");
                 }
             },
             onConnectionLost: function (response) {
+                this.connection_state = 'no connection';
                 if (this.debug) {
                     console.log("connection lost");
+
                 }
             },
             onMessageArrived: function (response) {
                 var ret_topic = response.destinationName;
                 var ret_payload = response.payloadString;
-                
 
-                this.fire('receive-message', {
+
+                this.fire('from-broker', {
                     topic: ret_topic,
                     payload: ret_payload
                 });
 
                 if (this.debug) {
-                    console.log("glass-timer: Message Arrived, topic:" + ret_topic + " payload:" + ret_payload);
+                    console.log("broker: Message Arrived, topic:" + ret_topic + " payload:" + ret_payload);
                 }
             }
 
