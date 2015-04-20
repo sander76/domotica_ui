@@ -11,9 +11,9 @@
     <script>
         Polymer("mqtt-subscriber", {
             created: function () {
-                //this.checked = false;
-                var parent = document.querySelector('mqtt-parent');
-                parent.addEventListener('from-broker', this.interpret.bind(this));
+                //var parent = document.querySelector('mqtt-parent');
+                //parent.addEventListener('from-broker', this.interpret.bind(this));
+                document.addEventListener('from-broker', this.interpret.bind(this));
             },
             interpret: function (message) {
                 console.log(message.detail);

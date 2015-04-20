@@ -22,9 +22,9 @@
                 this.client.onConnectionLost = this.onConnectionLost.bind(this);
                 this.client.onMessageArrived = this.onMessageArrived.bind(this);
 
-                var parent = document.querySelector('mqtt-parent');
-                parent.addEventListener('to-broker', this.publish.bind(this));
-
+                //var parent = document.querySelector('mqtt-parent');
+                //parent.addEventListener('to-broker', this.publish.bind(this));
+document.addEventListener('to-broker', this.publish.bind(this));
                 //
                 // For the sake of this example, we'll just define this here.
                 // Ideally, this would be passed in as an attribute

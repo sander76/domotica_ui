@@ -3,6 +3,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#0.5",
     "paho-mqtt-js": "~1.0.1",
-    "font-awesome-polymer-icons": "~4.2.0-b2"
+    "font-awesome-polymer-icons": "~4.2.0-b2",
+    "page.js": "~1.6.1"
   }
 }
