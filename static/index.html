@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    
     <template is="auto-binding" id='tmp'>
         <core-scaffold>
             <core-header-panel navigation flex>
@@ -43,7 +44,7 @@
                         <div>page 2</div>
                         <mqtt-parent></mqtt-parent>
                     </section>
-                    <section hash='other' layout vertical>
+                    <section hash='connection' layout vertical>
                         <div>page</div>
                     </section>
 
@@ -57,7 +58,7 @@
 
         //define routing
         page('/lights', lights);
-        page('/other', other);
+        page('/connection', other);
 
         function lights() {
             app.route = 'lights';

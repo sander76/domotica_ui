@@ -6,8 +6,8 @@
 <polymer-element name="mqtt-parent">
     <template>
         <!--        <mqtt-service id="mq" host="192.168.2.14" topics='{{topics}}' connection_state='{{connection_state}}' client="test.mosquitto.org" port="9001" debug="true">-->
-        </mqtt-service>
-        <mqtt-service host="test.mosquitto.org" topics='{{topics}}' client="test.mosquitto.org" port="8080" debug="true"></mqtt-service>
+    
+        <mqtt-service host="test.mosquitto.org" topics='{{topics}}' connection_state='{{connection_state}}' client="test.mosquitto.org" port="8080" debug="true"></mqtt-service>
 
         <mqtt-subscriber-toggle topic="{{light1}}"></mqtt-subscriber-toggle>
         <mqtt-subscriber-toggle topic="{{light1}}"></mqtt-subscriber-toggle>
