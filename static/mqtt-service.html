@@ -1,7 +1,25 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <script src="../bower_components/paho-mqtt-js/mqttws31.js"></script>
-<polymer-element name="mqtt-service" attributes="host port debug client subscribe topics connection_state">
+
+<polymer-element name="mqtt-service" attributes="host port debug client subscribe topics">
+
     <template>
+        <style>
+            input:disabled,
+            {
+                color: rgb(178, 178, 178);
+            }
+        </style>
+        status: {{connection_state.message}}
+        <div>
+            <paper-input disabled="{{connection_state.connected}}" floatingLabel="true" label="host" value="{{host}}"></paper-input>
+        </div>
+        <div>
+            <paper-input disabled floatingLabel="true" label="port" value="{{port}}"></paper-input>
+        </div>
+        <paper-button raised on-click={{reconnect}}>connect</paper-button>
+        <paper-button raised on-click={{disconnect}}>disconnect</paper-button>
     </template>
     <script>
         Polymer('mqtt-service', {
@@ -12,11 +30,33 @@
 
             created: function () {
                 this.clientid = this.clientid = "glasstimer_" + parseInt(Math.random() * 1000, 10);
-
-
             },
+
             ready: function () {
-                this.topics = [];
+
+                this.connection_states = {
+                        lost: {
+                            connected: false,
+                            message: "connection lost"
+                        },
+                        disconnected: {
+                            connected: false,
+                            message: "disconnected"
+                        },
+                        connected: {
+                            connected: true,
+                            message: "connected"
+                        },
+                        connecting: {
+                            connected: false,
+                            message: "connecting..."
+                        },
+                        failed: {
+                            connected: false,
+                            message: "connection failed"
+                        }
+                    }
+                    //this.topics = [];
                 this.client = new Paho.MQTT.Client(this.host, parseInt(this.port), this.clientid);
 
                 this.client.onConnectionLost = this.onConnectionLost.bind(this);
@@ -24,18 +64,18 @@
 
                 //var parent = document.querySelector('mqtt-parent');
                 //parent.addEventListener('to-broker', this.publish.bind(this));
-document.addEventListener('to-broker', this.publish.bind(this));
+                document.addEventListener('to-broker', this.publish.bind(this));
                 //
                 // For the sake of this example, we'll just define this here.
                 // Ideally, this would be passed in as an attribute
                 //
-//                this.options = {
-//                    timeout: 3,
-//                    useSSL: false,
-//                    cleanSession: true,
-//                    onSuccess: this.onConnect.bind(this),
-//                    onFailure: this.onFailure.bind(this)
-//                };
+                //                this.options = {
+                //                    timeout: 3,
+                //                    useSSL: false,
+                //                    cleanSession: true,
+                //                    onSuccess: this.onConnect.bind(this),
+                //                    onFailure: this.onFailure.bind(this)
+                //                };
                 this.connect();
             },
             getOptions: function () {
@@ -52,21 +92,24 @@ document.addEventListener('to-broker', this.publish.bind(this));
                 this.client.disconnect();
             },
             connect: function () {
-                this.connection_state = 'connecting';
+                this.connection_state = this.connection_states['connecting'];
                 this.client.connect(this.getOptions());
             },
-
+            reconnect: function () {
+                this.connect();
+            },
             onConnect: function () {
-                this.connection_state = 'connected';
+                this.connection_state = this.connection_states['connected'];
                 if (this.debug) {
                     console.log("connection established");
                 }
                 this.subscribe();
             },
 
+            //todo: what happens when connection is made before topics list is populated ?
             subscribe: function () {
                 for (var i = 0; i < this.topics.length; i++) {
-                    this.client.subscribe(this.topics[i], {
+                    this.client.subscribe(this.topics[i].topic, {
                         qos: 0
                     });
                 }
@@ -77,20 +120,20 @@ document.addEventListener('to-broker', this.publish.bind(this));
             publish: function (payload) {
                 console.log("topic fired: " + payload.detail);
                 message = new Paho.MQTT.Message(payload.detail.payload);
-                message.destinationName = "lights/1";
+                message.destinationName = payload.detail.topic;
                 message.retained = true;
                 this.client.send(message);
 
             },
 
             onFailure: function (response) {
-                this.connection_state = 'no connection';
+                this.connection_state = this.connection_states['failed'];
                 if (this.debug) {
                     console.log("connection failed");
                 }
             },
             onConnectionLost: function (response) {
-                this.connection_state = 'no connection';
+                this.connection_state = this.connection_states['lost'];
                 if (this.debug) {
                     console.log("connection lost");
 

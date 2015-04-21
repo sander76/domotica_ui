@@ -14,39 +14,39 @@
 
 </head>
 
-<body>
-    
-    <template is="auto-binding" id='tmp'>
+<body unresolved>
+
+
+    <template is="auto-binding" id='app'>
         <core-scaffold>
             <core-header-panel navigation flex>
                 <core-toolbar id="navheader">
                     <span>Menu</span>
-
                 </core-toolbar>
                 <core-menu valueattr="hash" selected="{{route}}">
                     <paper-item hash='lights'>
                         <a href="/lights">lights</a>
                     </paper-item>
                     <paper-item hash='connection'>
-                        <a href="/connection">other</a>
+                        <a href="/connection">connection</a>
                     </paper-item>
                 </core-menu>
             </core-header-panel>
 
             <span tool flex>Duomo</span>
 
-
             <div class="content">
-
                 <core-pages valueattr="hash" selected="{{route}}">
-
                     <section hash='lights' layout vertical>
-                        <div>page 2</div>
-                        <mqtt-parent></mqtt-parent>
+                        
+                        <mqtt-parent topics="{{topics}}"></mqtt-parent>
+                        
                     </section>
+
                     <section hash='connection' layout vertical>
-                        <div>page</div>
+                        <mqtt-service id="mqttserv" host="test.mosquitto.org" topics='{{topics}}' client="test.mosquitto.org" port="8080" debug="true"></mqtt-service>
                     </section>
+
 
                 </core-pages>
 
@@ -54,7 +54,19 @@
         </core-scaffold>
     </template>
     <script>
-        var app = document.querySelector('template[is="auto-binding"]');
+        var app = document.querySelector("#app");
+
+        
+        //todo: this data binding doesn't seem to work.
+//        app.light1 = {
+//            topic: "lights/1",
+//            name: "light 1"
+//        }
+//        app.light2 = {
+//            topic: "lights/2",
+//            name: "light 2"
+//        }
+        app.topics = [{topic:"lights1",name:"light 1"},{topic:"lights2",name:"light 2"}];
 
         //define routing
         page('/lights', lights);

@@ -7,3 +7,6 @@ html,
 body {
     font-family: 'RobotoDraft', sans-serif;
 }
+input:disabled, textarea:disabled {
+  color: rgb(178, 178, 178);
+}

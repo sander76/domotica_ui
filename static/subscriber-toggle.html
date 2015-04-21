@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/font-awesome-polymer-icons/fa-icons.html">
 <link rel="import" href="subscriber.html">
 
-<polymer-element name="mqtt-subscriber-toggle" attributes="topic control_name" extends="mqtt-subscriber">
+<polymer-element name="mqtt-subscriber-toggle" attributes="topic" extends="mqtt-subscriber">
     <template>
         <style>
             :host {
@@ -26,7 +26,7 @@
             <div>
                 <core-icon icon="fa:lightbulb-o"></core-icon>
             </div>
-            <div flex>{{control_name}}</div>
+            <div flex>{{topic.name}}</div>
             <div>
                 <paper-toggle-button on-change="{{toggleChanged}}" checked="{{checked}}"></paper-toggle-button>
             </div>
@@ -44,7 +44,7 @@
                 this.control_name = this.control_name || 'no title defined';
             },
             interpret: function (message) {
-                if (message.detail.topic === this.topic) {
+                if (message.detail.topic === this.topic.topic) {
                     if (message.detail.payload === '1') {
                         this.checked = true;
                     } else if (message.detail.payload === '0') {
@@ -60,7 +60,7 @@
                     payload = '0'
                 };
                 this.fire('to-broker', {
-                        topic: this.topic,
+                        topic: this.topic.topic,
                         payload: payload
                     }
 
