@@ -16,7 +16,7 @@
             <paper-input disabled="{{connection_state.connected}}" floatingLabel="true" label="host" value="{{host}}"></paper-input>
         </div>
         <div>
-            <paper-input disabled floatingLabel="true" label="port" value="{{port}}"></paper-input>
+            <paper-input disabled="{{connection_state.connected}}" floatingLabel="true" label="port" value="{{port}}"></paper-input>
         </div>
         <paper-button raised on-click={{reconnect}}>connect</paper-button>
         <paper-button raised on-click={{disconnect}}>disconnect</paper-button>
