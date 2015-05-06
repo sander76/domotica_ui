@@ -42,7 +42,7 @@
                     </section>
 
                     <section hash='connection' layout vertical>
-                        <mqtt-service id="mqttserv" host="test.mosquitto.org" topics='{{topics}}' client="test.mosquitto.org" port="8080" debug="true"></mqtt-service>
+                        <mqtt-service id="mqttserv" host="192.168.2.14" topics='{{topics}}' client="test.mosquitto.org" port="8080" debug="true"></mqtt-service>
                     </section>
 
 
@@ -64,7 +64,7 @@
 //            topic: "lights/2",
 //            name: "light 2"
 //        }
-        app.topics = [{topic:"lights1",name:"light 1"},{topic:"lights2",name:"light 2"}];
+        app.topics = [{topic:"mysensors/lights/1",name:"light 1",ui:"toggle"},{topic:"mysensors/temperatures/1",name:"temp 1",ui:"display"}];
 
         //define routing
         page('/lights', lights);

@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel=import href="mqtt-service.html">
-<!--<link rel=import href="subscriber.html">-->
+<link rel=import href="subscriber.html">
 <link rel=import href="subscriber-toggle.html">
 <link rel=import href="../bower_components/paper-button/paper-button.html">
 <polymer-element name="mqtt-parent" attributes="topics">
@@ -9,11 +9,16 @@
         <!--        <mqtt-service id="mq" host="192.168.2.14" topics='{{topics}}' connection_state='{{connection_state}}' client="test.mosquitto.org" port="9001" debug="true">-->
 
         <template repeat="{{t in topics}}">
-            <mqtt-subscriber-toggle topic="{{t}}"></mqtt-subscriber-toggle>
+            <template if="{{t.ui==='toggle'}}">
+                <mqtt-subscriber-toggle topic="{{t}}"></mqtt-subscriber-toggle>
+            </template>
+            <template if="{{t.ui==='display'}}">
+                <mqtt-subscriber topic="{{t}}"></mqtt-subscriber>
+            </template>
         </template>
 
 
-        <mqtt-subscriber-toggle topic="{{topics[0]}}"></mqtt-subscriber-toggle>
+        <!--        <mqtt-subscriber-toggle topic="{{topics[0]}}"></mqtt-subscriber-toggle>-->
     </template>
     <script>
         Polymer("mqtt-parent", {
@@ -22,13 +27,6 @@
                     console.log("topic: " + this.topics[i].name);
                 }
             },
-            //            reconnect: function () {
-            //                this.$.mq.connect();
-            //            },
-            //            disconnect: function () {
-            //                this.$.mq.disconnect();
-            //            }
-
         });
     </script>
 </polymer-element>
