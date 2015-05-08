@@ -42,7 +42,7 @@
                     </section>
 
                     <section hash='connection' layout vertical>
-                        <mqtt-service id="mqttserv" host="192.168.2.14" topics='{{topics}}' client="test.mosquitto.org" port="8080" debug="true"></mqtt-service>
+                        <mqtt-service id="mqttserv" host="192.168.2.14" topics='{{topics}}' client="test.mosquitto.org" port="9001" debug="true"></mqtt-service>
                     </section>
 
 
@@ -54,17 +54,7 @@
     <script>
         var app = document.querySelector("#app");
 
-        
-        //todo: this data binding doesn't seem to work.
-//        app.light1 = {
-//            topic: "lights/1",
-//            name: "light 1"
-//        }
-//        app.light2 = {
-//            topic: "lights/2",
-//            name: "light 2"
-//        }
-        app.topics = [{topic:"mysensors/lights/1",name:"light 1",ui:"toggle"},{topic:"mysensors/temperatures/1",name:"temp 1",ui:"display"}];
+        app.topics = [{topic:"room/lights/1",name:"light 1",ui:"toggle"},{topic:"room/temperatures/1",name:"temp 1",ui:"display"}];
 
         //define routing
         page('/lights', lights);

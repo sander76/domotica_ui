@@ -3,19 +3,42 @@
 <link rel=import href="subscriber.html">
 <link rel=import href="subscriber-toggle.html">
 <link rel=import href="../bower_components/paper-button/paper-button.html">
+<link rel=import href="../bower_components/core-menu/core-menu.html">
+<link rel=import href="../bower_components/core-menu/core-submenu.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
 <polymer-element name="mqtt-parent" attributes="topics">
     <template>
 
         <!--        <mqtt-service id="mq" host="192.168.2.14" topics='{{topics}}' connection_state='{{connection_state}}' client="test.mosquitto.org" port="9001" debug="true">-->
 
-        <template repeat="{{t in topics}}">
-            <template if="{{t.ui==='toggle'}}">
-                <mqtt-subscriber-toggle topic="{{t}}"></mqtt-subscriber-toggle>
-            </template>
-            <template if="{{t.ui==='display'}}">
-                <mqtt-subscriber topic="{{t}}"></mqtt-subscriber>
-            </template>
-        </template>
+<!--        <template>-->
+<!--
+            <core-menu selected="0">
+                <core-submenu label="toggles">
+-->
+                    <template repeat="{{t in topics}}">
+                        <template  if="{{t.ui==='toggle'}}">
+<!--                        <core-item>-->
+                            <mqtt-subscriber-toggle topic="{{t}}"></mqtt-subscriber-toggle>
+<!--                        </core-item>-->
+                            </template>
+                    </template>
+<!--
+                </core-submenu>
+                <core-submenu label="display">
+-->
+<!--
+                    <template repeat="{{t in topics}}" if="{{t.ui==='display'}}">
+
+                            <mqtt-subscriber topic="{{t}}"></mqtt-subscriber>
+
+                    </template>
+-->
+<!--
+                </core-submenu>
+            </core-menu>
+-->
+<!--        </template>-->
 
 
         <!--        <mqtt-subscriber-toggle topic="{{topics[0]}}"></mqtt-subscriber-toggle>-->
@@ -27,6 +50,9 @@
                     console.log("topic: " + this.topics[i].name);
                 }
             },
+//            iter:function*(){
+//            
+//            },
         });
     </script>
 </polymer-element>
