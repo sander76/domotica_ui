@@ -44,7 +44,7 @@
                 this.control_name = this.control_name || 'no title defined';
             },
             interpret: function (message) {
-                if (message.detail.topic === this.topic.topic) {
+                if (this.topic.sub.indexOf(message.detail.topic)>=0) {
                     if (message.detail.payload === '1') {
                         this.checked = true;
                     } else if (message.detail.payload === '0') {
