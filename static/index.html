@@ -36,9 +36,9 @@
             <div class="content">
                 <core-pages valueattr="hash" selected="{{route}}">
                     <section hash='lights' layout vertical>
-                        
+
                         <mqtt-parent topics="{{topics}}"></mqtt-parent>
-                        
+
                     </section>
 
                     <section hash='connection' layout vertical>
@@ -52,11 +52,19 @@
     <script>
         var app = document.querySelector("#app");
 
-        app.topics = [{pub:"room/lights/1",sub:["room/lights/1","room/lights/all"],name:"light 1",ui:"toggle"}];
+        app.topics = [{
+                pub: "room/lights/1",
+                sub: ["room/lights/1", "room/lights/all"],
+                name: "light 1",
+                ui: "toggle"
+            }
+        ,
+            {
+                sub: ["room/temperatures/1"],
+                name: "temp 1",
+                ui: "display"
+            }];
 
-        //,
-        //              {sub:"room/temperatures/1",name:"temp 1",ui:"display"}
-        
         //define routing
         page('/lights', lights);
         page('/connection', other);

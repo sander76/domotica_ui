@@ -109,9 +109,11 @@
             //todo: what happens when connection is made before topics list is populated ?
             subscribe: function () {
                 for (var i = 0; i < this.topics.length; i++) {
-                    this.client.subscribe(this.topics[i].topic, {
-                        qos: 0
-                    });
+                    for (var k = 0; k < this.topics[i].sub.length; k++) {
+                        this.client.subscribe(this.topics[i].sub[k], {
+                            qos: 0
+                        });
+                    }
                 }
             },
 

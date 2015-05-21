@@ -4,7 +4,7 @@
 <polymer-element name="mqtt-subscriber" attributes="topic">
     <template>
         <div layout horizontal center>
-            <h4>subscribed to topic: {{topic.topic}}</h4>
+            <h4>subscribed to topic: {{topic.sub}}</h4>
             <p>value : {{value}}</p>
         </div>
     </template>
@@ -16,7 +16,9 @@
                 document.addEventListener('from-broker', this.interpret.bind(this));
             },
             interpret: function (message) {
-                console.log(message.detail);
+                if (this.topic.sub.indexOf(message.detail.topic)>=0) {
+                    this.value=message.detail.payload;
+                }
             },
         });
     </script>
