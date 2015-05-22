@@ -16,6 +16,7 @@
 
 <body unresolved>
     <template is="auto-binding" id='app'>
+        <core-ajax auto url="/static/structure.json" handleAs="json" on-core-response="{{handle_json}}"></core-ajax>
         <core-scaffold>
             <core-header-panel navigation flex>
                 <core-toolbar id="navheader">
@@ -56,14 +57,19 @@
                 pub: "room/lights/1",
                 sub: ["room/lights/1", "room/lights/all"],
                 name: "light 1",
-                ui: "toggle"
+                ui_type: "toggle"
             }
         ,
             {
                 sub: ["room/temperatures/1"],
                 name: "temp 1",
-                ui: "display"
+                ui_type: "display"
             }];
+
+        app.handle_json = function (data) {
+            app.topics = data.detail.response;
+        };
+
 
         //define routing
         page('/lights', lights);

@@ -17,10 +17,10 @@
                 <core-submenu label="toggles">
 -->
         <template repeat="{{t in topics}}">
-            <template if="{{t.ui==='toggle'}}">
+            <template if="{{t.ui_type==='toggle'}}">
                 <mqtt-subscriber-toggle topic="{{t}}"></mqtt-subscriber-toggle>
             </template>
-            <template if="{{t.ui==='display'}}">
+            <template if="{{t.ui_type==='temp'}}">
                 <mqtt-subscriber topic="{{t}}"></mqtt-subscriber>
             </template>
         </template>
