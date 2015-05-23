@@ -12,8 +12,7 @@
                 background-color: white;
                 padding: 20px;
                 //width: 100%;
-                
-                margin:20px;
+                margin: 20px;
                 font-size: 1.2rem;
                 font-weight: 300;
             }
@@ -44,7 +43,7 @@
                 this.control_name = this.control_name || 'no title defined';
             },
             interpret: function (message) {
-                if (this.topic.sub.indexOf(message.detail.topic)>=0) {
+                if (this.topic.sub.indexOf(message.detail.topic) >= 0) {
                     if (message.detail.payload === '1') {
                         this.checked = true;
                     } else if (message.detail.payload === '0') {
@@ -59,11 +58,12 @@
                 } else {
                     payload = '0'
                 };
-                this.fire('to-broker', {
-                        topic: this.topic.pub,
-                        payload: payload
+                for (var i = 0; i < this.topic.sub.length; i++) {
+                    this.fire('to-broker', {
+                            topic: this.topic.pub[i],
+                            payload: payload
+                        }
                     }
-
                 );
             }
         });
