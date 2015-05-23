@@ -58,7 +58,7 @@
                 } else {
                     payload = '0'
                 };
-                for (var i = 0; i < this.topic.sub.length; i++) {
+                for (var i = 0; i < this.topic.pub.length; i++) {
                     this.fire('to-broker', {
                         topic: this.topic.pub[i],
                         payload: payload
