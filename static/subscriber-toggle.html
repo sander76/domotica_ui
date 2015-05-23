@@ -60,11 +60,10 @@
                 };
                 for (var i = 0; i < this.topic.sub.length; i++) {
                     this.fire('to-broker', {
-                            topic: this.topic.pub[i],
-                            payload: payload
-                        }
-                    }
-                );
+                        topic: this.topic.pub[i],
+                        payload: payload
+                    });
+                }
             }
         });
     </script>
