@@ -6,36 +6,37 @@
     <title>Duomo</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <link rel="manifest" href="manifest.json">
+    <
     <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 <!--    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>-->
-    <script src="../bower_components/page.js/page.js"></script>
+<!--    <script src="../bower_components/page.js/page.js"></script>-->
     <link rel="import" href="imports.html">
     <link rel="stylesheet" href="styles.css">
 
 </head>
 
-<body unresolved>
+<body class="fullbleed layout vertical">
     <template is="dom-bind" id='app'>
-        <core-ajax auto url="structure.json" handleAs="json" on-core-response="{{handle_json}}"></core-ajax>
-        <core-scaffold>
-            <core-header-panel navigation flex>
-                <core-toolbar id="navheader">
+        <iron-ajax auto url="structure.json" handle-as="json" on-response="handle_json"></iron-ajax>
+        
+            <paper-header-panel navigation flex>
+                <paper-toolbar id="navheader">
                     <span>Menu</span>
-                </core-toolbar>
-                <core-menu valueattr="hash" selected="{{route}}">
+                </paper-toolbar>
+                <paper-menu valueattr="hash" selected="{{route}}">
                     <paper-item hash='lights'>
                         <a href="/lights">lights</a>
                     </paper-item>
                     <paper-item hash='connection'>
                         <a href="/connection">connection</a>
                     </paper-item>
-                </core-menu>
-            </core-header-panel>
+                </paper-menu>
+            </paper-header-panel>
 
             <span tool flex>Duomo</span>
 
             <div class="content">
-                <core-pages valueattr="hash" selected="{{route}}">
+                <iron-pages valueattr="hash" selected="{{route}}">
                     <section hash='lights' layout vertical>
 
                         <mqtt-parent topics="{{topics}}"></mqtt-parent>
@@ -45,10 +46,10 @@
                     <section hash='connection' layout vertical>
                         <mqtt-service id="mqttserv" host="192.168.2.14" topics='{{topics}}' client="test.mosquitto.org" port="9001" debug="true"></mqtt-service>
                     </section>
-                </core-pages>
+                </iron-pages>
 
             </div>
-        </core-scaffold>
+        
     </template>
     <script>
         var app = document.querySelector("#app");
@@ -72,20 +73,20 @@
 
 
         //define routing
-        page('/lights', lights);
-        page('/connection', other);
-
-        function lights() {
-            app.route = 'lights';
-        }
-
-        function other() {
-            app.route = 'connection';
-        }
-
-        page({
-            hashbang: true
-        });
+//        page('/lights', lights);
+//        page('/connection', other);
+//
+//        function lights() {
+//            app.route = 'lights';
+//        }
+//
+//        function other() {
+//            app.route = 'connection';
+//        }
+//
+//        page({
+//            hashbang: true
+//        });
     </script>
 </body>
 
