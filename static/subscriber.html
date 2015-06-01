@@ -1,25 +1,30 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
 
-<polymer-element name="mqtt-subscriber" attributes="topic">
+
+
+<dom-module>
     <template>
         <div layout horizontal center>
             <h4>subscribed to topic: {{topic.sub}}</h4>
             <p>value : {{value}}</p>
         </div>
     </template>
-    <script>
-        Polymer("mqtt-subscriber", {
-            created: function () {
-                //var parent = document.querySelector('mqtt-parent');
-                //parent.addEventListener('from-broker', this.interpret.bind(this));
-                document.addEventListener('from-broker', this.interpret.bind(this));
-            },
-            interpret: function (message) {
-                if (this.topic.sub.indexOf(message.detail.topic)>=0) {
-                    this.value=message.detail.payload;
-                }
-            },
-        });
-    </script>
-</polymer-element>
+</dom-module>
+<script>
+    Polymer({
+        is: "mqtt-subscriber",
+        properties: {
+            topic: Object
+        },
+        created: function () {
+            //var parent = document.querySelector('mqtt-parent');
+            //parent.addEventListener('from-broker', this.interpret.bind(this));
+            document.addEventListener('from-broker', this.interpret.bind(this));
+        },
+        interpret: function (message) {
+            if (this.topic.sub.indexOf(message.detail.topic) >= 0) {
+                this.value = message.detail.payload;
+            }
+        },
+    });
+</script>

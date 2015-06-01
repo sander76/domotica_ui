@@ -6,7 +6,8 @@
     <title>Duomo</title>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <link rel="manifest" href="manifest.json">
-    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+<!--    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>-->
     <script src="../bower_components/page.js/page.js"></script>
     <link rel="import" href="imports.html">
     <link rel="stylesheet" href="styles.css">
@@ -14,7 +15,7 @@
 </head>
 
 <body unresolved>
-    <template is="auto-binding" id='app'>
+    <template is="dom-bind" id='app'>
         <core-ajax auto url="structure.json" handleAs="json" on-core-response="{{handle_json}}"></core-ajax>
         <core-scaffold>
             <core-header-panel navigation flex>

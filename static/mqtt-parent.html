@@ -2,40 +2,39 @@
 <link rel=import href="mqtt-service.html">
 <link rel=import href="subscriber.html">
 <link rel=import href="subscriber-toggle.html">
-<link rel=import href="../bower_components/paper-button/paper-button.html">
-<link rel=import href="../bower_components/core-menu/core-menu.html">
-<link rel=import href="../bower_components/core-menu/core-submenu.html">
-<link rel="import" href="../bower_components/core-item/core-item.html">
-<polymer-element name="mqtt-parent" attributes="topics">
+<!--<polymer-element name="mqtt-parent" attributes="topics">-->
+<dom-module>
     <template>
-
-        <!--        <mqtt-service id="mq" host="192.168.2.14" topics='{{topics}}' connection_state='{{connection_state}}' client="test.mosquitto.org" port="9001" debug="true">-->
-
-        <!--        <template>-->
-        <!--
-            <core-menu selected="0">
-                <core-submenu label="toggles">
--->
-        <template repeat="{{t in topics}}">
-            <template if="{{t.ui_type==='toggle'}}">
+        <template is="dom-repeat" items="{{topics}}">>
+            <template is="dom-if" if="{{item.ui_type==='toggle'}}">
                 <mqtt-subscriber-toggle topic="{{t}}"></mqtt-subscriber-toggle>
             </template>
-            <template if="{{t.ui_type==='temp'}}">
+            <template is="dom-if" if="{{item.ui_type==='temp'}}">
                 <mqtt-subscriber topic="{{t}}"></mqtt-subscriber>
             </template>
         </template>
-        
+
     </template>
-    <script>
-        Polymer("mqtt-parent", {
-            ready: function () {
-                for (var i = 0; i < this.topics.length; i++) {
-                    console.log("topic: " + this.topics[i].name);
-                }
-            },
-            //            iter:function*(){
-            //            
-            //            },
-        });
-    </script>
-</polymer-element>
+
+</dom-module>
+
+<script>
+    Polymer({
+        is: "mqtt-parent",
+
+        properties: {
+            topics: {
+                type: Array,
+                value: []
+            }
+        },
+
+        ready: function () {
+            for (var i = 0; i < this.topics.length; i++) {
+                console.log("topic: " + this.topics[i].name);
+            }
+        }
+
+    });
+</script>
+<!--</polymer-element>-->
