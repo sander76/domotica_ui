@@ -32,8 +32,8 @@
             </div>
             <div flex>{{topic.ui_name}}</div>
             <div>
-                <paper-toggle-button change="toggle_changed" checked="{{checked}}"></paper-toggle-button>
-                <paper-checkbox change="toggle_changed" checked="{{checked}}"></paper-checkbox> 
+                <paper-toggle-button on-change="toggle_changed" checked="{{checked}}"></paper-toggle-button>
+                <paper-checkbox on-change="toggle_changed" checked="{{checked}}"></paper-checkbox> 
             </div>
         </div>
     </template>
@@ -51,6 +51,7 @@
         ready: function () {
             this.checked = false;
             this.control_name = this.control_name || 'no title defined';
+            
         },
         interpret: function (message) {
             if (this.topic.sub.indexOf(message.detail.topic) >= 0) {
