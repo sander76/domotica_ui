@@ -1,12 +1,14 @@
 
 <dom-module id="mqtt-parent">
+    
     <template>
+        lights
         <template is="dom-repeat" items="{{topics}}">
-            <template is="dom-if" if="{{item.ui_type==='toggle'}}">
-                <mqtt-subscriber-toggle topic="{{t}}"></mqtt-subscriber-toggle>
+            <template is="dom-if" if="{{item.ui_type}}">
+                <mqtt-subscriber-toggle topic="{{item}}" ></mqtt-subscriber-toggle>
             </template>
-            <template is="dom-if" if="{{item.ui_type==='temp'}}">
-                <mqtt-subscriber topic="{{t}}"></mqtt-subscriber>
+            <template is="dom-if" if="{{item.ui_type}}">
+                <mqtt-subscriber topic="{{item}}"></mqtt-subscriber>
             </template>
         </template>
 
@@ -20,8 +22,7 @@
 
         properties: {
             topics: {
-                type: Array,
-                value: []
+                type: Array
             }
         },
 

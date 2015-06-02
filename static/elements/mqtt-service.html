@@ -10,7 +10,7 @@
     </style>
     <template>
 
-        status: {{connection_state.message}}
+        status: <span>{{connection_state.message}}</span>
         <div>
             <paper-input disabled="{{connection_state.connected}}" label="host" value="{{host}}"></paper-input>
         </div>
@@ -50,7 +50,7 @@
         },
 
         ready: function () {
-
+            
             this.connection_states = {
                     lost: {
                         connected: false,

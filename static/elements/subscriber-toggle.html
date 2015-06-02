@@ -26,18 +26,15 @@
 */
     </style>
     <template>
-
         <div layout horizontal>
             <div>
                 <!--                <core-icon icon="fa:lightbulb-o"></core-icon>-->
             </div>
             <div flex>{{topic.ui_name}}</div>
             <div>
-                <paper-toggle-button change="{{toggleChanged}}" checked="{{checked}}"></paper-toggle-button>
+                <paper-toggle-button change="toggle_changed" checked="{{checked}}"></paper-toggle-button>
+                <paper-checkbox change="toggle_changed" checked="{{checked}}"></paper-checkbox> 
             </div>
-
-
-
         </div>
     </template>
 </dom-module>
@@ -64,7 +61,7 @@
                 }
             }
         },
-        toggleChanged: function () {
+        toggle_changed: function () {
             var payload;
             if (this.checked) {
                 payload = '1'

@@ -2,7 +2,7 @@
     {
       "ui_name": "bedroom light 1",
       "comment": "the name to appear in the ui",
-      "ui_type": "toggle",
+      "ui_type": true,
       "comment": "the type this control has to take",
       "node": "1;100;1;0;2;",
       "comment":"mysensors node address",
@@ -17,7 +17,7 @@
     },
     {
       "ui_name": "living room temp 1",
-      "ui_type": "temp",
+      "ui_type": false,
       "node": "1;0;1;0;0;",
       "pub": ["room/temperatures/1"],
       "sub": ["room/temperatures/1"]
