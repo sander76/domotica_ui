@@ -24,6 +24,8 @@
     "paper-menu": "PolymerElements/paper-menu#1.0.0",
     "paper-item": "PolymerElements/paper-item#1.0.0",
     "iron-pages": "PolymerElements/iron-pages#1.0.0",
-    "paho-mqtt-js": "~1.0.1"
+    "paho-mqtt-js": "~1.0.1",
+    "page": "~1.6.3",
+    "paper-button": "PolymerElements/paper-button#1.0.0"
   }
 }

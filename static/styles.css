@@ -5,7 +5,9 @@ paper-item a {
 
 html,
 body {
-    font-family: 'RobotoDraft', sans-serif;
+    background: #fafafa;
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #333;
 }
 input:disabled, textarea:disabled {
   color: rgb(178, 178, 178);

@@ -1,8 +1,8 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<!--<link rel="import" href="../bower_components/polymer/polymer.html">-->
 
 
 
-<dom-module>
+<dom-module id="mqtt-subscriber">
     <template>
         <div layout horizontal center>
             <h4>subscribed to topic: {{topic.sub}}</h4>
@@ -17,8 +17,6 @@
             topic: Object
         },
         created: function () {
-            //var parent = document.querySelector('mqtt-parent');
-            //parent.addEventListener('from-broker', this.interpret.bind(this));
             document.addEventListener('from-broker', this.interpret.bind(this));
         },
         interpret: function (message) {

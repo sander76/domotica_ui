@@ -1,11 +1,7 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel=import href="mqtt-service.html">
-<link rel=import href="subscriber.html">
-<link rel=import href="subscriber-toggle.html">
-<!--<polymer-element name="mqtt-parent" attributes="topics">-->
-<dom-module>
+
+<dom-module id="mqtt-parent">
     <template>
-        <template is="dom-repeat" items="{{topics}}">>
+        <template is="dom-repeat" items="{{topics}}">
             <template is="dom-if" if="{{item.ui_type==='toggle'}}">
                 <mqtt-subscriber-toggle topic="{{t}}"></mqtt-subscriber-toggle>
             </template>
