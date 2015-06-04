@@ -20,18 +20,24 @@
         <iron-ajax auto url="structure.json" handle-as="json" on-response="handle_json"></iron-ajax>
 
         <paper-drawer-panel id="drawerPanel" responsive-width="1280px">
-            <div class="nav" drawer>
+            <div drawer>
+                <paper-toolbar id="drawerToolbar">
+                    <span>Menu</span>
+                </paper-toolbar>
                 <paper-menu class="list" attr-for-selected="hash" on-iron-select="onMenuSelect" selected="{{route}}">
-                    <a hash="lights" href="/lights">
-                        <iron-icon icon="home">
-                        </iron-icon>
-                        <span>Lights</span>
-                    </a>
-                    <a hash="connection" href="/connection">
-                        <iron-icon icon="info"></iron-icon>
-                        <span>Connection</span>
-                    </a>
-
+                    <paper-item>
+                        <a hash="lights" href="/lights">
+                            <iron-icon icon="home">
+                            </iron-icon>
+                            <span>Lights</span>
+                        </a>
+                    </paper-item>
+                    <paper-item>
+                        <a hash="connection" href="/connection">
+                            <iron-icon icon="info"></iron-icon>
+                            <span>Connection</span>
+                        </a>
+                    </paper-item>
 
                 </paper-menu>
             </div>
@@ -39,6 +45,7 @@
 
             <paper-header-panel class="main" main mode="waterfall">
                 <paper-toolbar>
+                    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
                     <span tool flex>Duomo</span>
 
                 </paper-toolbar>
@@ -62,48 +69,51 @@
     </template>
     <script>
         (function (document) {
-                'use strict';
-                var app = document.querySelector("#app");
+            'use strict';
+            var app = document.querySelector("#app");
 
-                app.topics = [{
-                        pub: "room/lights/1",
-                        sub: ["room/lights/1", "room/lights/all"],
-                        name: "light 1",
-                        ui_type: "toggle"
+            app.topics = [{
+                    pub: "room/lights/1",
+                    sub: ["room/lights/1", "room/lights/all"],
+                    name: "light 1",
+                    ui_type: "toggle"
             }
         ,
-                    {
-                        sub: ["room/temperatures/1"],
-                        name: "temp 1",
-                        ui_type: "display"
+                {
+                    sub: ["room/temperatures/1"],
+                    name: "temp 1",
+                    ui_type: "display"
             }];
 
-                app.handle_json = function (data) {
-                    app.topics = data.detail.response;
-                };
-                app.onMenuSelect = function () {
-//                    var drawerPanel = document.querySelector('#paperDrawerPanel');
-//                    if (drawerPanel.narrow) {
-//                        drawerPanel.closeDrawer();
-//                    }
-                };
-
+            app.handle_json = function (data) {
+                app.topics = data.detail.response.ui;
+            };
+            app.onMenuSelect = function () {
+                //                    var drawerPanel = document.querySelector('#paperDrawerPanel');
+                //                    if (drawerPanel.narrow) {
+                //                        drawerPanel.closeDrawer();
+                //                    }
+            };
+            window.onfocus = function () {
+                    var mqtt_service = document.querySelector('#mqttserv');
+                    console.log("got focus");
+                }
                 //define routing
-//                page('/', lights);
-//                page('/connection', other);
-//
-//                function lights() {
-//                    app.route = 'lights';
-//                }
-//
-//                function other() {
-//                    app.route = 'connection';
-//                }
-//
-//                page({
-//                    hashbang: true
-//                });
-            })(document);
+                //                page('/', lights);
+                //                page('/connection', other);
+                //
+                //                function lights() {
+                //                    app.route = 'lights';
+                //                }
+                //
+                //                function other() {
+                //                    app.route = 'connection';
+                //                }
+                //
+                //                page({
+                //                    hashbang: true
+                //                });
+        })(document);
     </script>
 </body>
 

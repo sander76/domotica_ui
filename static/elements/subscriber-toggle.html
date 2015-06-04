@@ -8,34 +8,29 @@
 
 <dom-module id="mqtt-subscriber-toggle">
     <!--<polymer-element name="mqtt-subscriber-toggle" attributes="topic" extends="mqtt-subscriber">-->
-    <style>
-        :host {
-            display: block;
-            position: relative;
-            background-color: white;
-            padding: 20px;
-            //width: 100%;
-            margin: 20px;
-            font-size: 1.2rem;
-            font-weight: 300;
+<style>
+        
+        .desc {
+            flex-grow: 1;
         }
-        /*
-            core-icon {
-                color: #656565;
-            }
-*/
+        
+        
+
     </style>
     <template>
-        <div layout horizontal>
-            <div>
-                <!--                <core-icon icon="fa:lightbulb-o"></core-icon>-->
+<!--        <paper-material>-->
+            <div class="flex layout horizontal">
+                <div>
+                    <iron-icon icon="image:wb-incandescent"></iron-icon>
+                </div>
+                <div class="desc">{{topic.ui_name}}</div>
+                <div>
+                    <paper-toggle-button on-change="toggle_changed" checked="{{checked}}"></paper-toggle-button>
+
+                </div>
             </div>
-            <div flex>{{topic.ui_name}}</div>
-            <div>
-                <paper-toggle-button on-change="toggle_changed" checked="{{checked}}"></paper-toggle-button>
-                <paper-checkbox on-change="toggle_changed" checked="{{checked}}"></paper-checkbox> 
-            </div>
-        </div>
+<!--        </paper-material>-->
+
     </template>
 </dom-module>
 
@@ -51,7 +46,7 @@
         ready: function () {
             this.checked = false;
             this.control_name = this.control_name || 'no title defined';
-            
+
         },
         interpret: function (message) {
             if (this.topic.sub.indexOf(message.detail.topic) >= 0) {

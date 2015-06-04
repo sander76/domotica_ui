@@ -7,19 +7,26 @@
         {
             color: rgb(178, 178, 178);
         }
+        
+        paper-material {
+            margin: 20px;
+            padding: 20px;
+        }
     </style>
     <template>
-
-        status: <span>{{connection_state.message}}</span>
-        <div>
-            <paper-input disabled="{{connection_state.connected}}" label="host" value="{{host}}"></paper-input>
-        </div>
-        <div>
-            <paper-input disabled="{{connection_state.connected}}" label="port" value="{{port}}"></paper-input>
-        </div>
-        <paper-button raised on-click="reconnect">connect</paper-button>
-        <paper-button raised on-click="disconnect">disconnect</paper-button>
+        <paper-material>
+            status: <span>{{connection_state.message}}</span>
+            <div>
+                <paper-input disabled="{{connection_state.connected}}" label="host" value="{{host}}"></paper-input>
+            </div>
+            <div>
+                <paper-input disabled="{{connection_state.connected}}" label="port" value="{{port}}"></paper-input>
+            </div>
+            <paper-button raised on-click="reconnect">connect</paper-button>
+            <paper-button raised on-click="disconnect">disconnect</paper-button>
+        </paper-material>
     </template>
+
 </dom-module>
 <script>
     Polymer({
@@ -50,7 +57,7 @@
         },
 
         ready: function () {
-            
+
             this.connection_states = {
                     lost: {
                         connected: false,
@@ -168,7 +175,8 @@
             if (this.debug) {
                 console.log("broker: Message Arrived, topic:" + ret_topic + " payload:" + ret_payload);
             }
-        }
+        },
+
 
     });
 </script>

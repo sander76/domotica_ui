@@ -1,0 +1,33 @@
+<dom-module id="subscriber-container">
+    <style>
+        paper-material {
+            display: inline-block;
+            min-width: 300px;
+            max-width: 440px;
+            margin: 10px;
+            font-size: 1.2rem;
+            font-weight: 300;
+            padding: 20px;
+            height:2em;
+        }
+        
+        iron-icon {
+            color: #ff0000;
+        }
+    </style>
+    <template>
+        <paper-material>
+            <div class="flex">
+                <content></content>
+            </div>
+        </paper-material>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: 'subscriber-container',
+        properties: {
+            //starred: Boolean
+        }
+    });
+</script>

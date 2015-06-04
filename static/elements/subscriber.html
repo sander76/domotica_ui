@@ -3,11 +3,30 @@
 
 
 <dom-module id="mqtt-subscriber">
+    <style>
+/*
+        :host {
+            display: inline-block;
+            min-width: 300px;
+            max-width: 440px;
+            margin: 20px;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+*/
+        .desc {
+            flex-grow: 1;
+        }
+    </style>
+
     <template>
-        <div layout horizontal center>
-            <h4>subscribed to topic: <span>{{topic.sub}}</span></h4>
-            <p>value : <span>{{value}}</span></p>
-        </div>
+<!--        <paper-material>-->
+            <div class="flex layout horizontal">
+                <div class="desc">{{topic.ui_name}}</div>
+                <span>{{value}}</span>
+                <span>{{topic.ui_unit}}</span>
+            </div>
+<!--        </paper-material>-->
     </template>
 </dom-module>
 <script>

@@ -1,17 +1,36 @@
-
 <dom-module id="mqtt-parent">
-    
+    <style>
+        .content {
+            padding: 0 16px;
+        }
+        /*
+        .list {
+            padding-top: 12px;
+            background-color: white;
+            display: inline-block;
+            max-width: 640px;
+            min-width: 500px;
+            height: 228px;
+            margin: 12px;
+            @apply(--shadow-elevation-2dp);
+        }
+*/
+    </style>
     <template>
-        lights
-        <template is="dom-repeat" items="{{topics}}">
-            <template is="dom-if" if="{{item.ui_type}}">
-                <mqtt-subscriber-toggle topic="{{item}}" ></mqtt-subscriber-toggle>
+        <div horizontal layout class="flex">
+            <template is="dom-repeat" items="{{topics}}">
+                <template is="dom-if" if="{{dsplay(item.ui_type,'toggle')}}">
+                    <subscriber-container>
+                        <mqtt-subscriber-toggle topic="{{item}}"></mqtt-subscriber-toggle>
+                    </subscriber-container>
+                </template>
+                <template is="dom-if" if="{{dsplay(item.ui_type,'display')}}">
+                    <subscriber-container>
+                        <mqtt-subscriber topic="{{item}}"></mqtt-subscriber>
+                    </subscriber-container>
+                </template>
             </template>
-            <template is="dom-if" if="{{item.ui_type}}">
-                <mqtt-subscriber topic="{{item}}"></mqtt-subscriber>
-            </template>
-        </template>
-
+        </div>
     </template>
 
 </dom-module>
@@ -30,8 +49,14 @@
             for (var i = 0; i < this.topics.length; i++) {
                 console.log("topic: " + this.topics[i].name);
             }
+        },
+        dsplay: function (tp1, tp2) {
+            if (tp1 === tp2) {
+                return true;
+            } else {
+                return false;
+            }
         }
-
     });
 </script>
 <!--</polymer-element>-->
